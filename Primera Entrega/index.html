@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Reader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="headContainer">
+            <div class="titleContainer"><a class="linkTitle" href="Index.html">RSS Reader </a></div>
+            <div class="browserContainer">
+                <input class="newsBox" type="text" placeholder="News">
+                <button class="searchButton"> SEARCH </button>
+            </div>
+        </div>
+        <div class="menuContainer">
+            <div class="headLinkCont">
+                <input class="linkBox" type="text" placeholder="RSS Link">
+                <button class="addButton" class="cyanButton"> Add  </button>
+            </div>
+            <p class="linksadded"> Added links <br>
+                Menú Lorem, ipsum dolor sit amet consectetur adipisicing elit. Distinctio, nostrum asperiores a
+                veritatis
+                atque quisquam molestiae maxime illum praesentium fuga voluptatum eum, cumque sed qui, sint suscipit
+                nemo
+                repellendus modi.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita, tempore numquam. Aut quasi repellat
+                mollitia odit laboriosam quo voluptates voluptatibus ex, aliquam non atque voluptate at praesentium sit
+                vero
+                deleniti? </p>
+        </div>
+        <div class="newsContainer">
+            <div class="sortingsBar">
+                <button onclick="byDate()" class="sortbtn">Date</button>
+                <button onclick="byTitle()" class="sortbtn">Title</button>
+                <button onclick="byRelevance()" class="sortbtn">Relevance</button>
+                <button class="updatebtn"> UPDATE </button>
+            </div>
+            <div class="readerContainer">
+                Generación Dinámica
+                orem ipsum dolor sit amet consectetur, adipisicing elit. Numquam veritatis eum harum reprehenderit
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Título</th>
+                            <th>URL</th>
+                            <th>Descripción</th>
+                            <th>Categorías</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>22/02/2024</td>
+                            <td>El título va aqui</td>
+                            <td>https://developer.mozilla.org/es/docs/Web/CSS/border-style</td>
+                            <td> Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam provident quaerat unde
+                                voluptates sit,
+                                facilis laboriosam labore, vel assumenda fugit perferendis cum consequuntur facere
+                                quidem illum
+                                accusamus totam harum earum?</td>
+                            <td>Cine </td>
+                        </tr>
+                        <tr>
+                            <td>22/02/2024</td>
+                            <td>El título va aqui</td>
+                            <td>https://developer.mozilla.org/es/docs/Web/CSS/border-style</td>
+                            <td>voluptatibus. Id tempora saepe dolore, asperiores corrupti officiis beatae esse ipsa,
+                                ipsam, dignissimos
+                                harum in odio vel?
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum, unde. Eius doloribus quod
+                                maiores
+                                temporibus officiis iusto aspernatur inventore hic et, exercitationem, blanditiis, cum
+                                ea incidunt
+                                consectetur nostrum animi rem.
+                            </td>
+                            <td>Cine</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
