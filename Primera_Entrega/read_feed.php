@@ -16,7 +16,7 @@ if (isset($_GET['urls'])) {
        
         foreach ($feed->get_items() as $item) {
             
-            if($item != null){
+            if($item != null && !empty($item->get_date()) && !empty($item->get_title()) && !empty($item->get_description()) && !empty($item->get_categories())){
                 $html .= '<tr>'; 
                 $html .= '<td>' . $item->get_date('j-F-Y g:i a') . '</td>';
                 $html .= '<td>' . $item->get_title() . '</td>';
@@ -35,15 +35,6 @@ if (isset($_GET['urls'])) {
                 }
                 $html .= '</td>';
                 $html .= '</tr>';
-                /*
-                $categories = array();
-                foreach ($item->get_categories() as $category) {
-                    $categories[] = "<p>" . $category->get_label() . "<p>";
-                }
-                $html .= implode('', $categories);
-                $html .= '</td>';
-                $html .= '</tr>';
-                */
             }
         }
     }
