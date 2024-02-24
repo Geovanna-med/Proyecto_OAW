@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Reader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="headContainer">
+            <div class="titleContainer"><a class="linkTitle" href="Index.html">RSS Reader </a></div>
+            <div class="browserContainer">
+                <input class="newsBox" type="text" id="searchNews" placeholder="News">
+                <button class="searchButton" id="btnSearch" onclick="searchNews()"> SEARCH </button>
+            </div>
+        </div>
+        <div class="menuContainer">
+            <div class="headLinkCont">
+                <input class="linkBox" type="text" id="feedUrl" placeholder="RSS Link" >
+                <button class="addButton" class="cyanButton"  onclick="addUrl()"> Add  </button>
+            </div>
+            <p class="linksadded"> Added links <br> </p>
+        </div>
+        <div class="newsContainer">
+            <div class="sortingsBar">
+                <button onclick="byDate()" class="sortbtn">Date</button>
+                <button onclick="byTitle()" class="sortbtn">Title</button>
+                <button onclick="byURL()" class="sortbtn">URL</button>
+                <button onclick="byDescription()" class="sortbtn">Description</button>
+                <button onclick="byCategories()" class="sortbtn">Category</button>
+                <button class="updatebtn" onclick="actualizarNoticias()"> UPDATE </button>
+            </div>
+            <div class="readerContainer">
+               <!-- Generación Dinámica
+                orem ipsum dolor sit amet consectetur, adipisicing elit. Numquam veritatis eum harum reprehenderit -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">URL</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Categorías</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableFeeds">
+                        <!-- Noticias -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+
+    var feeds = [];
+
+    function addUrl() {
+      var feedUrl = document.getElementById("feedUrl").value;
+      if (feedUrl.trim() !== "" && !feeds.includes(feedUrl.trim()) && isUrl(feedUrl)) {
+        feeds.push(feedUrl);
+        urlAdd(feedUrl);
+        document.getElementById("feedUrl").value = ""; // Limpiar el input 
+      }else{
+        alert("La URL ingresada no es válida");
+      }
+    }
+
+    function urlAdd(newUrl) {
+        var linksAddedContainer = document.querySelector(".linksadded");
+        var item = document.createElement("p");
+        item.textContent = newUrl;
+        linksAddedContainer.appendChild(item);
+    }
+
+    function actualizarNoticias() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("tableFeeds").innerHTML = this.responseText;
+        }
+      };
+      var queryString = feeds.map(url => "urls[]=" + encodeURIComponent(url)).join("&");
+      xhttp.open("GET", "read_feed.php?" + queryString, true);
+      xhttp.send();
+    }
+
+
+    function searchNews() {
+        console.log("Función searchNews llamada");
+        var searchTerm = document.getElementById("searchNews").value.toLowerCase();
+        var rows = document.querySelectorAll("#tableFeeds tr");
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var titleCell = row.cells[1]; 
+            if (titleCell) {
+                var title = titleCell.textContent.toLowerCase(); 
+                if (title.includes(searchTerm)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none"; 
+                }
+            }
+        }
+    }
+
+    function isUrl(url) {
+        try {
+            new URL(url);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+    document.getElementById("btnSearch").addEventListener("click", searchNews());
+
+    function byDate() {
+        sortColumn(0); 
+    }
+
+    function byTitle() {
+        sortColumn(1); 
+    }
+
+    function byURL() {
+        sortColumn(2); 
+    }
+
+    function byDescription() {
+        sortColumn(3); 
+    }
+
+    function byCategories() {
+        sortColumn(4); 
+    }
+
+    function sortColumn(index) {
+    let registros = document.querySelectorAll('.table tbody tr');
+    registros = Array.from(registros);
+    registros.sort(function(a, b) {
+        let celda1, celda2;
+        celda1 = a.cells[index].textContent.toLowerCase();
+        celda2 = b.cells[index].textContent.toLowerCase();
+        if(index === 0){
+            let fecha1 = new Date(celda1);
+            let fecha2 = new Date(celda2);
+            return fecha2 - fecha1; // Orden descendente
+        } else {
+            return celda1.localeCompare(celda2);
+        }
+    });
+    let tabla = document.querySelector('.table tbody');
+    while (tabla.firstChild) {
+        tabla.removeChild(tabla.firstChild);
+    }
+    registros.forEach(function(registro) {
+        tabla.appendChild(registro);
+    });
+}
+    </script>
+</body>
+</html>
