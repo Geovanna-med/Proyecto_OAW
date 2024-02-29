@@ -21,11 +21,11 @@ if ($result->num_rows > 0) {
         $html .= "<h2>Categorías:</h2> <br>";
         $html .= "<span class='categoria'>" . $row['category'] . "</span><br>";
         $html .= '</td>';
-        $html .= '<td>';
+        $html .= '<td style="vertical-align: middle;">';
         if (!empty($row['image_url'])) {
-            $html .= "<img src='" . $row['image_url'] . "' alt='imagen' class='newsImage' style='max-width: 100%; height: auto;'>";
+            $html .= "<img src='" . $row['image_url'] . "' alt='imagen' class='newsImage'>";
         } else {
-            $html .= "<img src='no_image.jpg' alt='imagen predeterminada' class='newsImage' style='max-width: 100%; height: auto;'>";
+            $html .= "<img src='no_image.jpg' alt='imagen predeterminada' class='newsImage'>";
         }
         //$html .=  "<img src='" . $row['image_url'] . "' alt='imagen' class='newsImage' style='max-width: 100%; height: auto;'>";
         $html .= '</td>';

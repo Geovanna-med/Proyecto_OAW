@@ -57,11 +57,11 @@ function createHTMLTable($results) {
         $html .= "<h2>Categorías:</h2> <br>";
         $html .= "<span class='categoria'>" . $result['category'] . "</span><br>";
         $html .= '</td>';
-        $html .= '<td>';
+        $html .= '<td style="vertical-align: middle;">';
         if (!empty($result['image_url'])) {
-            $html .= "<img src='" . $result['image_url'] . "' alt='imagen' class='newsImage' style='max-width: 100%; height: auto;'>";
+            $html .= "<img src='" . $result['image_url'] . "' alt='imagen' class='newsImage'>";
         } else {
-            $html .= "<img src='no_image.jpg' alt='imagen predeterminada' class='newsImage' style='max-width: 100%; height: auto;'>";
+            $html .= "<img src='no_image.jpg' alt='imagen predeterminada' class='newsImage'>";
         }
         //$html .=  "<img src='" . $result['image_url'] . "' alt='imagen' class='newsImage' style='max-width: 100%; height: auto;'>";
         $html .= '</td>';
