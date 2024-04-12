@@ -12,9 +12,29 @@ if (isset($_GET['urls'])) {
         insertItemsToDB($feed, $con);
     }
     $sql = "SELECT * FROM `news`;";
-    $results = $con->query($sql);
-    $html = createHTMLTable($results);
-    echo $html;
+    $result = $con->query($sql);
+    $data = array();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $newsItem = array(
+                'date' => $row['date'],
+                'title' => $row['title'],
+                'url' => $row['url'],
+                'description' => $row['description'],
+                'category' => $row['category'],
+                'image_url' => $row['image_url']
+            );
+            $data[] = $newsItem;
+        }
+    } else {
+        $data['message'] = '0 resultados';
+    }
+    $jsonData = json_encode($data);
+    header('Content-Type: application/json');
+    echo $jsonData;
+    $con->close();
+
 } else {
     echo "No se proporcionó la URL del feed.";
 }
@@ -45,32 +65,6 @@ function configFeed($url) {
     return $feed;
 }
 
-function createHTMLTable($results) {
-    $html = "";
-    foreach( $results as $result) {
-        $html .= '<tr>'; 
-        $html .= '<td>';
-        $html .= "<h2>Fecha:<span class='fecha'>" . $result['date'] . "</span></h2><br>";
-        $html .= "<h1><span class='titulo'>" . $result['title'] . "</span></h1><br>";
-        $html .= "<h2>URL:</h2> <a href='" . $result['url'] . "'><span class='url'>" . $result['url'] . "</span></a><br>";
-        $html .= "<h2>Descripción:</h2> <span class='descripcion'>" . $result['description'] . "</span><br>";
-        $html .= "<h2>Categorías:</h2> <br>";
-        $html .= "<span class='categoria'>" . $result['category'] . "</span><br>";
-        $html .= '</td>';
-        $html .= '<td style="vertical-align: middle;">';
-        if (!empty($result['image_url'])) {
-            $html .= "<img src='" . $result['image_url'] . "' alt='imagen' class='newsImage'>";
-        } else {
-            $html .= "<img src='no_image.jpg' alt='imagen predeterminada' class='newsImage'>";
-        }
-        //$html .=  "<img src='" . $result['image_url'] . "' alt='imagen' class='newsImage' style='max-width: 100%; height: auto;'>";
-        $html .= '</td>';
-        $html .= '</tr>';
-
-    }
-    return $html;
-}
-
 function insertItemsToDB($feed, $con) {
     foreach ($feed->get_items() as $item) {
         $date = $con->real_escape_string($item->get_date('Y-m-d H:i:s'));
@@ -79,7 +73,6 @@ function insertItemsToDB($feed, $con) {
         $description = $con->real_escape_string($item->get_description());
         $description = str_replace(array("\r", "\n"), ' ', $description);
         $image_url = !empty($item->get_enclosure(0)) ? $con->real_escape_string($item->get_enclosure(0)->get_link()) : '';
-        // $image_url = $item->get_item_tags('https://www.technologyreview.com/feed/','content')[0]['attribs']['']['url'];
         preg_match_all('/<image>(.*?)<\/image>/s', $item->get_content(), $matches);
 
         if (!empty($matches[1][0])) {

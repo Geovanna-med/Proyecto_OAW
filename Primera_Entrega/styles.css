@@ -113,7 +113,6 @@ body {
 .readerContainer th {
   background-color: #f1f1f1;
   width: 20%;
-  /* Establece el ancho de las cabeceras de la tabla, esto es 20 porque son 5 100/5 */
 }
 
 .readerContainer td {
