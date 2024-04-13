@@ -6,7 +6,7 @@
     <meta name="description" content="Lector web de RSS feeds, desarrollado en la asignatura 'Optimización de Aplicaciones Web' para implementar 
     técnicas de optimización en términos del volumen y el tiempo de transferencia de recursos entre el cliente y el servidor.">
     <title>RSS Reader</title>
-    <link rel="icon" href="rss_icon.ico" type="image/x-icon">
+    <link rel="icon" href="rss__icon.ico" type="image/x-icon">
     <link rel="preload" href="PlayfairDisplay-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="CloisterBlack.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="styles.css" />
@@ -24,7 +24,7 @@
             id="searchNews"
             placeholder="News"
           />
-          <button class="searchButton" id="btnSearch" onclick="searchNews()">
+          <button class="searchButton" id="btnSearch">
             SEARCH
           </button>
         </div>
@@ -37,7 +37,7 @@
             id="feedUrl"
             placeholder="RSS Link"
           />
-          <button class="addButton" class="cyanButton" onclick="addUrl()">
+          <button class="addButton" class="cyanButton" id="addUrlBtn">
             Add
           </button>
         </div>
@@ -45,12 +45,12 @@
       </div>
       <div class="newsContainer">
         <div class="sortingsBar">
-          <button onclick="byDate()" class="sortbtn">Date</button>
-          <button onclick="byTitle()" class="sortbtn">Title</button>
-          <button onclick="byURL()" class="sortbtn">URL</button>
-          <button onclick="byDescription()" class="sortbtn">Description</button>
-          <button onclick="byCategories()" class="sortbtn">Category</button>
-          <button class="updatebtn" onclick="actualizarNoticias()">
+          <button id="sortByDateBtn" class="sortbtn">Date</button>
+          <button id="sortByTitleBtn" class="sortbtn">Title</button>
+          <button id="sortByUrlBtn" class="sortbtn">URL</button>
+          <button id="sortByDescriptionBtn" class="sortbtn">Description</button>
+          <button id="sortByCategoriesBtn" class="sortbtn">Category</button>
+          <button id="updateNewsBtn" class="updatebtn">
             UPDATE
           </button>
         </div>
@@ -68,6 +68,6 @@
         </div>
       </div>
     </div>
-    <script src="script.js"></script>
+    <script type="text/javascript" defer src ="script.js"></script>
   </body>
 </html>

@@ -1,4 +1,21 @@
     var feeds = [];
+    const sortByDateBtn = document.getElementById("sortByDateBtn");
+    const sortByTitleBtn = document.getElementById("sortByTitleBtn");
+    const sortByURLBtn = document.getElementById("sortByUrlBtn");
+    const sortByDescriptionBtn = document.getElementById("sortByDescriptionBtn");
+    const sortByCategoriesBtn = document.getElementById("sortByCategoriesBtn");
+    const updateNewsBtn = document.getElementById("updateNewsBtn");
+    const addUrlBtn = document.getElementById("addUrlBtn");
+    const searchNewsBtn = document.getElementById("btnSearch");
+    
+    sortByDateBtn.addEventListener("click", () => sortColumn(0));
+    sortByTitleBtn.addEventListener("click", () => sortColumn(1));
+    sortByURLBtn.addEventListener("click", () =>sortColumn(2));
+    sortByDescriptionBtn.addEventListener("click", () => sortColumn(3));
+    sortByCategoriesBtn.addEventListener("click", () => sortColumn(4));
+    updateNewsBtn.addEventListener("click", actualizarNoticias);
+    addUrlBtn.addEventListener("click", addUrl);
+    searchNewsBtn.addEventListener("click", searchNews);
 
     function addUrl() {
         var feedUrl = document.getElementById("feedUrl").value;
@@ -31,7 +48,7 @@
             }
         };
         var queryString = feeds.map((url) => "urls[]=" + encodeURIComponent(url)).join("&");
-        xhttp.open("GET", "read_feed.php?" + queryString, true);
+        xhttp.open("GET", "read_feed.php?" + queryString);
         xhttp.send();
     }
 
@@ -48,7 +65,7 @@
                 }
             }
         };
-        xhttp.open("GET","search_feed.php?searchString=" + encodeURIComponent(searchTerm),true);
+        xhttp.open("GET","search_feed.php?searchString=" + encodeURIComponent(searchTerm));
         xhttp.send();
     }
 
@@ -78,7 +95,6 @@
             return false;
         }
     }
-    document.getElementById("btnSearch").addEventListener("click", searchNews);
 
     function byDate() {
         sortColumn(0);
@@ -159,6 +175,6 @@
                 }
             }
         };
-        xhttp.open("GET", "load_feed.php", true);
+        xhttp.open("GET", "load_feed.php");
         xhttp.send();
     }
