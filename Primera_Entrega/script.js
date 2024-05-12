@@ -80,7 +80,7 @@
             if (!(newsItem.image_url === null || typeof newsItem.image_url === 'undefined')) {
                 html += "<img src='" + newsItem.image_url + "' alt='imagen' class='newsImage' style='max-width: 100%; height: auto;' loading='lazy'>";
             } else {
-                html += "<img src='no_image.jpg' alt='imagen predeterminada' class='newsImage' style='max-width: 100%; height: auto;'>";
+                html += "<img src='no_image.jpg' alt='imagen predeterminada' class='newsImage' style='max-width: 100%; height: auto;' loading='lazy'>";
             }
             html += '</td><tr>';
         });
@@ -166,6 +166,7 @@
     function getNoticias() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
+            console.log("Mensaje desde");
             if (this.readyState == 4 && this.status == 200) {
                 var responseData = JSON.parse(this.responseText);
                 if (responseData.length > 0) {

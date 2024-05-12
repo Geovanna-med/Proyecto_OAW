@@ -1,4 +1,17 @@
 <?php
+
+//header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+//header("Pragma: no-cache");
+
+$cache_time = 15; // Tiempo en segundos que la página estará en caché  
+$cache_filename = "cache_feeds.txt"; // archivo de caché  
+$cache_created = (file_exists($cache_filename)) ? filemtime($cache_filename) : 0;  
+  
+if ((time() - $cache_created) < $cache_time) {  
+  readfile($cache_filename);  
+  die();  
+}
+ob_start();
 $conn = new mysqli('localhost', 'root', '', 'rss_feeds', '33065');
 
 if (!$conn) {
@@ -6,7 +19,6 @@ if (!$conn) {
 }
 
 $sql = "SELECT date,  title, url,  description, category, image_url FROM news ORDER BY date DESC";
-
 $result = $conn->query($sql);
 $data = array();
 
@@ -28,4 +40,9 @@ if ($result->num_rows > 0) {
 $jsonData = json_encode($data);
 header('Content-Type: application/json');
 echo $jsonData;
+file_put_contents($cache_filename,  ob_get_contents());  
 $conn->close();
+ob_end_flush();  
+
+
+
